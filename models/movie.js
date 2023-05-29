@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const { regExp } = require('../utils.js/utils');
+const { regExp } = require('../utils/utils');
+const { InvalidUrl } = require('../errors/messageErrors');
 
 const movieSchema = new mongoose.Schema({
   country: {
@@ -27,7 +28,7 @@ const movieSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator: (v) => regExp.test(v),
-      message: 'Неверный url адрес',
+      message: InvalidUrl,
     },
   },
   trailerLink: {
@@ -35,7 +36,7 @@ const movieSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator: (v) => regExp.test(v),
-      message: 'Неверный url адрес',
+      message: InvalidUrl,
     },
   },
   thumbnail: {
@@ -43,7 +44,7 @@ const movieSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator: (v) => regExp.test(v),
-      message: 'Неверный url адрес',
+      message: InvalidUrl,
     },
   },
   owner: {

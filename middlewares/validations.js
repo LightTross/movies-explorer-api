@@ -1,11 +1,11 @@
 const { celebrate, Joi } = require('celebrate');
-const { regExp } = require('../utils.js/utils');
+const { regExp } = require('../utils/utils');
 
 // валидация аутентификации
 const signInValidation = celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
-    password: Joi.string().required().min(8).max(24),
+    password: Joi.string().required().min(8),
   }),
 });
 
@@ -13,8 +13,8 @@ const signInValidation = celebrate({
 const signUpValidation = celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
-    password: Joi.string().required().min(8).max(24),
-    name: Joi.string().min(2).max(30),
+    password: Joi.string().required().min(8),
+    name: Joi.string().required().min(2).max(30),
   }),
 });
 

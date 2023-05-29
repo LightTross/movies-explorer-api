@@ -11,18 +11,32 @@ const {
   UnauthorizedError,
 } = require('../errors/errors');
 
+const {
+  IncorrectData,
+  DoubleMail,
+  Exit,
+  Unauthorized,
+  SuccessCheck,
+  UserIsNotFound,
+} = require('../errors/messageErrors');
+
 // создаем пользователя
 module.exports.createUser = async (req, res, next) => {
   try {
     const { email, password, name } = req.body;
     const hash = await bcrypt.hash(password, 10);
     const newUser = await User.create({ email, password: hash, name });
-    res.status(201).send(newUser);
+    res.status(201).send({
+      email: newUser.email,
+      name: newUser.name,
+      _id: newUser._id,
+
+    });
   } catch (err) {
     if (err.name === 'ValidationError') {
-      next(new BadRequestError('Неверные данные'));
+      next(new BadRequestError(IncorrectData));
     } else if (err.code === 11000) {
-      next(new ConflictError('Пользователь с данной почтой уже существует'));
+      next(new ConflictError(DoubleMail));
     } else {
       next(err);
     }
@@ -49,21 +63,21 @@ module.exports.login = async (req, res, next) => {
 };
 
 module.exports.signout = async (req, res) => {
-  res.clearCookie('jwt').send({ message: 'Выход' });
+  res.clearCookie('jwt').send({ message: Exit });
 };
 
 // провека на куки
 module.exports.checkCookie = async (req, res) => {
   const cookie = req.cookies;
   if (!cookie) {
-    throw new UnauthorizedError('Необходима авторизация');
+    throw new UnauthorizedError(Unauthorized);
   }
   const token = cookie.jwt;
   try {
     jwt.verify(token, NODE_ENV ? JWT_SECRET : 'some-secret-key');
-    res.send({ message: 'Успешная проверка' });
+    res.send({ message: SuccessCheck });
   } catch (err) {
-    res.send({ message: 'Необходима авторизация' });
+    res.send({ message: Unauthorized });
   }
 };
 
@@ -72,7 +86,7 @@ module.exports.getCurrentUser = async (req, res, next) => {
   try {
     const currentUser = await User.findById(req.user._id);
     if (!currentUser) {
-      return next(new NotFoundError('Пользователь не найден.'));
+      return next(new NotFoundError(UserIsNotFound));
     }
     return res.send(currentUser);
   } catch (err) {
@@ -89,11 +103,13 @@ module.exports.updateUser = async (req, res, next) => {
       { email, name },
       { new: true, runValidators: true },
     );
-    return res.send({ email: updateProfile.email, name: updateProfile.name });
+    res.send({ email: updateProfile.email, name: updateProfile.name });
   } catch (err) {
     if (err.name === 'ValidationError') {
-      return next(new BadRequestError('Переданы некорректные данные при обновлении профиля'));
+      next(new BadRequestError(IncorrectData));
+    } else if (err.name === 'MongoServerError') {
+      next(new ConflictError(DoubleMail));
     }
-    return next(err);
+    next(err);
   }
 };

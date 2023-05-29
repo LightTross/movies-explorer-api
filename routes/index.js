@@ -11,6 +11,8 @@ const auth = require('../middlewares/auth');
 
 const { NotFoundError } = require('../errors/errors');
 
+const { PageNotFound } = require('../errors/messageErrors');
+
 const {
   signInValidation,
   signUpValidation,
@@ -19,15 +21,16 @@ const {
 router.get('/check', checkCookie);
 router.post('/signup', signUpValidation, createUser);
 router.post('/signin', signInValidation, login);
-router.get('/signout', signout);
 
 router.use(auth);
 
 router.use('/users', require('./users'));
 router.use('/movies', require('./movies'));
 
+router.get('/signout', signout);
+
 router.use('*', (req, res, next) => {
-  next(new NotFoundError('Страница не найдена'));
+  next(new NotFoundError(PageNotFound));
 });
 
 module.exports = { router };
