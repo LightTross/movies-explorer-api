@@ -21,13 +21,12 @@ const {
 router.get('/check', checkCookie);
 router.post('/signup', signUpValidation, createUser);
 router.post('/signin', signInValidation, login);
+router.get('/signout', signout);
 
 router.use(auth);
 
 router.use('/users', require('./users'));
 router.use('/movies', require('./movies'));
-
-router.get('/signout', signout);
 
 router.use('*', (req, res, next) => {
   next(new NotFoundError(PageNotFound));
