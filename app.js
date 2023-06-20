@@ -25,13 +25,13 @@ mongoose.connect(MONGO_URL);
 app.use(cors({
   credentials: true,
   origin: [
-    'http://api.talalayeva.promovies.nomoredomains.rocks/',
-    'https://api.talalayeva.promovies.nomoredomains.rocks/',
-    'http://talalayeva.promovies.nomoredomains.rocks/',
-    'https://talalayeva.promovies.nomoredomains.rocks/',
+    'http://api.talalayeva.promovies.nomoredomains.rocks',
+    'https://api.talalayeva.promovies.nomoredomains.rocks',
+    'http://talalayeva.promovies.nomoredomains.rocks',
+    'https://talalayeva.promovies.nomoredomains.rocks',
     'localhost:3000',
-    'http://localhost:3000/',
-    'https://localhost:3000/',
+    'http://localhost:3000',
+    'https://localhost:3000',
   ],
 }));
 
