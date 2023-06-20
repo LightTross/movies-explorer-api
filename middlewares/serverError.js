@@ -1,4 +1,4 @@
-const InternalServerError = require('../errors/messageErrors');
+const { InternalServerError } = require('../errors/messageErrors');
 
 const serverError = (err, req, res, next) => {
   console.log(err);

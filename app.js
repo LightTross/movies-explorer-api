@@ -22,6 +22,7 @@ const app = express();
 
 mongoose.connect(MONGO_URL);
 
+/*
 app.use(cors({
   credentials: true,
   origin: [
@@ -34,6 +35,9 @@ app.use(cors({
     'https://localhost:3000/',
   ],
 }));
+*/
+
+app.use(cors());
 
 app.use(cookieParser());
 

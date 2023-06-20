@@ -47,7 +47,7 @@ module.exports.deleteMovie = async (req, res, next) => {
       return next(new ForbiddenError(InsufficientRightsToDelete));
     }
     const deleteMovie = await Movies.findByIdAndRemove(req.params.movieId);
-    return res.send({ message: deleteMovie.nameRU, RemovedFromSave });
+    return res.send({ message: `${ deleteMovie.nameRU } ${ RemovedFromSave }` });
   } catch (err) {
     return next(err);
   }
