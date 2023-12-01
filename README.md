@@ -24,14 +24,10 @@ DELETE /movies/_id - удаляет сохранённый фильм по id
 * Limitter
 -----------------------------------------------------
 
-### Ссылка на репозиторий:
-[https://github.com/LightTross/movies-explorer-api/tree/level-1]
-
 ## Ссылки на проект
 
-IP 51.250.29.174
-
-Backend api.talalayeva.promovies.nomoredomains.rocks/
+Backend https://api1.demo.mycaptcha.ru
+Frontend https://front1.demo.mycaptcha.ru
 
 ### Инструкция по развёртыванию:
 --------------------------------
