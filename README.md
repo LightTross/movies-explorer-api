@@ -28,6 +28,7 @@ DELETE /movies/_id - удаляет сохранённый фильм по id
 
 Backend https://api1.demo.mycaptcha.ru  
 Frontend https://front1.demo.mycaptcha.ru
+IP 95.131.147.55
 
 ### Инструкция по развёртыванию:
 --------------------------------
